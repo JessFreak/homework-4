@@ -34,6 +34,8 @@ export const task3 = {
             let word = "";
             for (let i = 0; i < string.length; i++) {
 
+                if (i === string.length-1 && !divides.includes(string[i]) ) words.push(word + string[i]);     //якщо останнього символу немає
+
                 if ( divides.includes(string[i]) ) {
                     while (divides.includes(string[i+1]) ) i++;    //на випадок декількох символів поспіль
                     words.push(word)
@@ -63,8 +65,10 @@ export const task3 = {
 
             for (let i = 0; i < string.length; i++) {
 
-                if ( divides.includes(string[i]) ) {
+                //якщо останнього символу немає
+                if (i === string.length-1 && !divides.includes(string[i]) ) sentences.push(sentence + string[i]);
 
+                if ( divides.includes(string[i]) ) {
 
                     if (string[i] === '.' && string[i+1] === '.' && string[i+2] === '.') {
 
@@ -75,7 +79,6 @@ export const task3 = {
                         while (divides.includes(string[i+1]) ) i++;    //на випадок декількох символів поспіль
                         sentence += string[i];                  //додаю кінцевий знак
                     }
-
 
                     if (string[i+1] === ' ' ) i++;          //щоб не брати пробіл в наступне речення
 
@@ -99,28 +102,26 @@ export const task3 = {
             }
 
         } else if (variant === "vowel") {
-            const vowels = ['A', 'a', 'E', 'e', 'I', 'i', 'O', 'o', 'Y', 'y'];   //розраховано на англійські літери
+            const vowels = ['A', 'a', 'E', 'e', 'I', 'i', 'O', 'o', 'Y', 'y', 'U', 'u'];   //розраховано на англійські літери
 
-            for (count; count < string.length; count++) {                               //пропускаю лише голосні
-                const bool = vowels.some( (vowel) => vowel === string[count]);
-                if (bool) break;
-            }
 
             return {
                 next() {
 
-                    if (count < string.length) {
-                        return { done: false, value: string[count++] };
+                        while ( !vowels.includes(string[count]) && count < string.length ) count++;
+                        //пропустить лише голосні
 
-                    } else {
-                        return { done: true };
+                        if (count < string.length) {
+                            return {done: false, value: string[count++]};
+
+                        } else {
+                            return {done: true};
+                        }
+
                     }
-
                 }
-            }
-            
-        } else {            //якщо властивість не буде потрібною, то їх закине на звичайний ітератор
-            //це щоб помилки не виникало
+            }  else {            //якщо властивість не буде потрібною, то їх закине на звичайний ітератор
+                                 //це щоб помилки не виникало
             return {
                 next() {
                     if (count < string.length) {

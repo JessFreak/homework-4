@@ -62,6 +62,34 @@ export function test_3() {
     assert(sentences2[1], "I found the error!");
     assertArray( sentences2, ["I have bad news...", "I found the error!", "What is it?", "404."] );
 
+    task3.iterator = "vowel";
+    const vowels = [];
+    for (let element of task3) {
+        vowels.push(element);
+    }
+    assert(vowels[0], "I");
+    assert(vowels[1], "a");
+    assertArray( vowels, ['I', 'a', 'e', 'a', 'e', 'I', 'o', 'u', 'e', 'e', 'o', 'a', 'i', 'i'] );
+
+    //рядок без кінцевого символу, з ним були проблеми
+    task3.string = "word lalal words";
+    task3.iterator = "word";
+    const words2 = [];
+    for (let el of task3 ) {
+        words2.push(el);
+    }
+    assert(words2[0], "word");
+    assert(words2[1], "lalal");
+    assert(words2[2], "words");
+
+    task3.iterator = "sentence";
+    const sentences3 = [];
+    for (let el of task3 ) {
+        sentences3.push(el);
+    }
+    assert(sentences3[0], "word lalal words");
+    assert(sentences3[1], undefined);
+
     try {
         task3.string = 3321;
         for (let el of task3) {

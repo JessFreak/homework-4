@@ -7,11 +7,16 @@ export const task6 = {
     [Symbol.toPrimitive](hint) {
         const [ towns, temps ] = [ Object.keys(this), Object.values(this) ];
 
-        if (towns.length === 0 || temps.length === 0) {
+        if (towns.length === 0 || temps.length === 0 ||
+            temps.some( (temp) => temp === undefined || towns.some( (name) => name === undefined ) ) ) {
             throw new Error("Incomplete data");
         }
-        if ( temps.some( (temp) => isNaN( +temp) ) || temps.some( (temp) => temp === undefined ) ) {
+        if ( temps.some( (temp) => isNaN( +temp) ) ) {
             throw new Error("Temperature is not a number");
+        }
+
+        if( temps.some( (temp) => !Number.isFinite(+temp) ) ) {
+            throw new Error("Too hot/cold");
         }
 
         if (hint === "string") {

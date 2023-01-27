@@ -54,4 +54,12 @@ export function test_6() {
         "Odesa: 0;\n" +
         "Herson: +5.");        //плюсик додав
     assert(+task6, 0.5);
+
+    try {
+        task6.Donbas = -Infinity;
+        console.log(+task6);
+    } catch (error) {
+        console.log("Norm error:", error.message);
+    }
+
 }

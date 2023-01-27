@@ -64,6 +64,30 @@ export function test_2() {
     assert( task2.amountByName("wolf"), 7 );
 
     try {
+        task2.addAnimal("wolf", Infinity);
+    } catch (error) {
+        console.log("Norm error: ", error.message);
+    }
+
+    try {
+        task2.addAnimal("wolf", 3.4);
+    } catch (error) {
+        console.log("Norm error: ", error.message);
+    }
+
+    try {
+        task2.addAnimal(525, 4);
+    } catch (error) {
+        console.log("Norm error: ", error.message);
+    }
+
+    try {
+        task2.addAnimal(null, 4);
+    } catch (error) {
+        console.log("Norm error: ", error.message);
+    }
+
+    try {
         task2.addAnimalNorm("fox", "4fa");
     } catch (error) {
         console.log("Norm error: ", error.message);

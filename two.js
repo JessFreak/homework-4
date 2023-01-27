@@ -62,10 +62,18 @@ export const task2 = {
 
     addAnimal(name, amount = 1) {
 
+        if (typeof(name) !== "string") {
+            throw new Error("Name is not a string");
+        }
+
         if ( isNaN(+amount) ) {
             throw new Error("Amount is not a number");
         } else {
             amount = +amount;
+        }
+
+        if ( !Number.isInteger(amount) || !Number.isFinite(amount) ) {
+            throw new Error("Amount is not integer");
         }
 
         if ( !this.checkAnimal(name) ) {
@@ -83,6 +91,10 @@ export const task2 = {
 
     },
     addAnimalNorm(name, amount = 1) {
+
+        if (name === null) {
+            throw new Error("Name is null");
+        }
 
         if ( isNaN(+amount) ) {
             throw new Error("Amount is not a number");

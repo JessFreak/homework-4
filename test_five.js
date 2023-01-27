@@ -4,7 +4,7 @@ import {assert, assertArray, assertObject} from "./assert.js";
 const student = {
     name: "Olexander",
     surname: "Maliy",
-    course: 1,
+    course: '1',       //1(число) теж спрацює
     faculty: "FICE",
     security: {
         password: "1234",
@@ -19,14 +19,14 @@ const student = {
     ukrainian: 96,
 }
 const badStudent = {
-    name: "John"
+    name: "John"        //відсутній об'єкт security (він перевіряється першим)
 }
 
 const badStudent2 = {
     name: "John",
     course:3,
-
-    security: {             //цей з об'єктом всередині
+                                //відсутні деякі параметри
+    security: {
         password: 321,
         mail: "@mail.com"
     }
@@ -42,9 +42,65 @@ const badStudent3 = {
         mail: "SM@gmail.com",
     },
     maths: 99,
-    programming: "what?",
+    programming: "what?",      //оцінка - рядок
     ukrainian: 96,
 }
+
+const badStudent4 = {
+    name: "Olexander",
+    surname: "Maliy",
+    course: 1,
+    faculty: "FICE",
+    security: {
+        password: "1234",
+        mail: "SM@gmail.com",
+    },
+    maths: 99,
+    programming: Infinity,      //оцінка - нескінченість
+    ukrainian: 96,
+}
+const badStudent5 = {
+    name: "Olexander",
+    surname: "Maliy",
+    course: -1,              // 0 не пропустить як undefined, тому -1
+    faculty: "FICE",
+    security: {
+        password: "1234",
+        mail: "SM@gmail.com",
+    },
+    maths: 99,
+    programming: 89,
+    ukrainian: 96,
+}
+
+const badStudent6 = {
+    name: "Olexander",
+    surname: "Maliy",
+    course: "error",        //курс - не число
+    faculty: "FICE",
+    security: {
+        password: "1234",
+        mail: "SM@gmail.com",
+    },
+    maths: 99,
+    programming: 89,
+    ukrainian: 96,
+}
+
+const badStudent7 = {
+    name: {414: 41},        //об'єкт, а не рядок
+    surname: "Maliy",
+    course: 1,
+    faculty: "FICE",
+    security: {
+        password: "1234",
+        mail: "SM@gmail.com",
+    },
+    maths: 99,
+    programming: 89,
+    ukrainian: 96,
+}
+
 export function test_5() {
     assert( task5.makeUsername("Stepan", "Brown"), "Stepan Brown" );
     assert( task5.makeUsername(), "undefined undefined");          // такого не буде, бо викине помилку перед цим
@@ -87,6 +143,30 @@ export function test_5() {
 
     try {
         task5.makeStudent(badStudent3);
+    } catch (error) {
+        console.log("Norm error:", error.message);
+    }
+
+    try {
+        task5.makeStudent(badStudent4);
+    } catch (error) {
+        console.log("Norm error:", error.message);
+    }
+
+    try {
+        task5.makeStudent(badStudent5);
+    } catch (error) {
+        console.log("Norm error:", error.message);
+    }
+
+    try {
+        task5.makeStudent(badStudent6);
+    } catch (error) {
+        console.log("Norm error:", error.message);
+    }
+
+    try {
+        task5.makeStudent(badStudent7);
     } catch (error) {
         console.log("Norm error:", error.message);
     }
